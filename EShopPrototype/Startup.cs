@@ -58,6 +58,8 @@ namespace EShopPrototype
             // services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
             services.AddDbContext<AppDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<BasketRepository>();
             services.AddScoped<PasswordManager>();
         }
 

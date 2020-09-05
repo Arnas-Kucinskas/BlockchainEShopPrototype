@@ -1,4 +1,5 @@
-﻿using EShopPrototype.Models.Authentication;
+﻿using EShopPrototype.Models;
+using EShopPrototype.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace EShopPrototype.Data
         }
 
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

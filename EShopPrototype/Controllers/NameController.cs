@@ -21,12 +21,6 @@ namespace EShopPrototype.Controllers
         {
             _jwtAuthenticationManager = jwtAuthenticationManager;
         }
-        // GET: api/<NameController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "Jonw", "Plow" };
-        }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -39,6 +33,5 @@ namespace EShopPrototype.Controllers
             }
             return Ok(token);
         }
-       
     }
 }
