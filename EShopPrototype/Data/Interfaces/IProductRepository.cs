@@ -8,7 +8,7 @@ namespace EShopPrototype.Data.Interfaces
 {
     public interface IProductRepository
     {
-        public void CreateProduct(Product product);
+        public Task CreateProduct(Product product);
         public Product GetProductById(int id);
     }
 }

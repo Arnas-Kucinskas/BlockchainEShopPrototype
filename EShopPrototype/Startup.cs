@@ -57,10 +57,15 @@ namespace EShopPrototype
             services.AddScoped<IJwtAuthenticationManager, JwtAuthenticationManager>();
             // services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
             services.AddDbContext<AppDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<BasketRepository>();
             services.AddScoped<PasswordManager>();
+            services.AddScoped<BlockchainRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -25,10 +25,10 @@ namespace EShopPrototype.Controllers
         }
 
         [HttpGet("GetUserBasket/{id}", Name = "GetUserBasket")]
-        public IActionResult GetUserBasket(int id)
+        public async Task<IActionResult> GetUserBasket(int id)
         {
-            var userBasket = _basketRepository.GetMyBasket(id);
-            return Ok();
+            var userBasket = await _basketRepository.GetMyBasket(id);
+            return Ok(userBasket);
         }
 
         [HttpPost("AddProduct")]

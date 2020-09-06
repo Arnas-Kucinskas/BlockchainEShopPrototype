@@ -11,13 +11,14 @@ namespace EShopPrototype.Data
     public class BasketRepository
     {
         private readonly AppDBContext _appDBContext;
-
-        public BasketRepository(AppDBContext appDBContext)
+        private readonly BlockchainRepository _blockchainRepository;
+        public BasketRepository(AppDBContext appDBContext, BlockchainRepository blockchainRepository)
         {
             _appDBContext = appDBContext;
+            _blockchainRepository = blockchainRepository;
         }
 
-        public void AddProductToBasket(Basket basket)
+        public  void AddProductToBasket(Basket basket)
         {
 
             if (basket == null)
@@ -28,17 +29,19 @@ namespace EShopPrototype.Data
             _appDBContext.SaveChanges();
         }
 
-        public List<Basket> GetMyBasket(int id)
+        public async Task<List<Basket>> GetMyBasket(int id)
         {
             List<Basket> basket = _appDBContext.Baskets
                 .Where(x => x.UserId == id)
                 .Include(p => p.Product)
-                .Include(u => u.User)
                 .ToList();
-            
+            foreach (var item in basket)
+            {
+                //item.Product.Price = _blockchainRepository.GetProductPrice(item.Product.Id);
+                item.Product.Price = await _blockchainRepository.GetProductPrice(item.Product.Id);
+            }
 
-            //return _appDBContext.Baskets.Where<>
-            return null;
+            return basket;
         }
     }
 }

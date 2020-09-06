@@ -10,13 +10,15 @@ namespace EShopPrototype.Data
     public class ProductRepository : IProductRepository
     {
         private readonly AppDBContext _appDBContext;
+        private readonly BlockchainRepository _blockchainRepository;
 
-        public ProductRepository(AppDBContext appDBContext)
+        public ProductRepository(AppDBContext appDBContext, BlockchainRepository blockchainRepository)
         {
             _appDBContext = appDBContext;
+            _blockchainRepository = blockchainRepository;
         }
 
-        public void CreateProduct(Product product)
+        public async Task CreateProduct(Product product)
         {
             if (product == null)
             {
@@ -25,11 +27,17 @@ namespace EShopPrototype.Data
 
             _appDBContext.Products.Add(product);
             _appDBContext.SaveChanges();
+
+            /* TODO - error handle it */
+            bool successful = await _blockchainRepository.SetProductPrice(product.Id, product.Price);
         }
 
         public Product GetProductById(int id)
         {
+            _blockchainRepository.GetProductPriceHistory(id);
             return _appDBContext.Products.FirstOrDefault(p => p.Id == id);
         }
+
+        
     }
 }
