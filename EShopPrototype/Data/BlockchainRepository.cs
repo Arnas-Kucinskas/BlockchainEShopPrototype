@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using EShopPrototype.Models;
 using Microsoft.Extensions.Configuration;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
@@ -103,7 +104,7 @@ namespace EShopPrototype.Data
             string privateKey = _configuration.GetSection("Blockchain:PrivateAddressKey").Value;
 			Account account = new Account(privateKey);
 			Web3 web3 = new Web3(account, infuraUrl);
-			/* TODO  - calculate has based on transaction*/
+			/* TODO  - calculate GAS based on transaction*/
 			web3.TransactionManager.DefaultGas = 1000000;
 
 			Contract contract = web3.Eth.GetContract(abi, contractAddress);
@@ -133,9 +134,10 @@ namespace EShopPrototype.Data
         }
 
 
-		public async Task GetProductPriceHistory(int id)
-		{//List<Tuple<DateTime, double>>
-			List <Tuple<DateTime, double>> priceHistoryList  = new List<Tuple<DateTime, double>>();
+		public async Task<List<PriceHistory>> GetProductPriceHistory(int id)
+		{
+			List <PriceHistory> priceHistoryList  = new List<PriceHistory>();
+
 			BlockParameter firstBlock = BlockParameter.CreateEarliest();
 			BlockParameter lastBlock = BlockParameter.CreateLatest();
 
@@ -152,17 +154,11 @@ namespace EShopPrototype.Data
 					DateTime blockDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 					blockDateTime = blockDateTime.AddSeconds((long)blockWithTransactions.Timestamp.Value).ToLocalTime();
 					priceHistoryList.Add(
-							new Tuple<DateTime, double>(blockDateTime, FromIntPriceToDouble((int)log.Event.Price))
+							new PriceHistory() { Date = blockDateTime , Price = FromIntPriceToDouble((int)log.Event.Price) }
 						);
 				}
-				
             }
-			
-
-			/*return new List<Tuple<DateTime, double>>() { 
-                new Tuple<DateTime, double>(DateTime.Now, 50.95),
-                new Tuple<DateTime, double>(DateTime.Now.AddDays(1), 60.95)
-            };*/
+			return priceHistoryList;
         }
 
 		private double FromIntPriceToDouble(int price)

@@ -17,11 +17,7 @@ namespace EShopPrototype
 {
     public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
-        private readonly Dictionary<string, string> users = new Dictionary<string, string>
-        {
-            {"test1" , "password1" },
-            {"test2" , "password2" }
-        };
+
         private string _key;
         private readonly PasswordManager _passwordManager;
 

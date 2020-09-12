@@ -19,11 +19,6 @@ namespace EShopPrototype.Controllers
         {
             _productRepository = productRepository;
         }
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
 
         [HttpPost]
         public IActionResult CreateProduct(Product product)
@@ -32,10 +27,39 @@ namespace EShopPrototype.Controllers
             return CreatedAtRoute(nameof(GetProductById), new { Id = product.Id }, product);
         }
 
-        [HttpGet("{id}", Name = "GetProductById")]
-        public IActionResult GetProductById(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            Product product = _productRepository.GetProductById(id);
+            Product product = await _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _productRepository.DeleteProduct(product);
+            return NoContent();
+        }
+
+        /* Price update is not allowed   */
+        [HttpPost("Update")]
+        public  IActionResult UpdateProduct([FromBody] Product product)
+        {
+            _productRepository.UpdateProduct(product);
+            return Ok();
+            
+        }
+
+        [HttpGet("{pageNumber}/{itemsPerPage}")]
+        public IActionResult GetPaginatedProducts(int pageNumber, int itemsPerPage)
+        {
+            List<Product> productList = _productRepository.GetPaginatedProductsList(pageNumber, itemsPerPage);
+            return Ok(productList);
+
+        }
+
+        [HttpGet("{id}", Name = "GetProductById")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            Product product = await _productRepository.GetProductById(id);
             return Ok(product);
         }
 

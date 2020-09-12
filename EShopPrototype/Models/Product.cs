@@ -17,7 +17,9 @@ namespace EShopPrototype.Models
         public virtual List<Basket> Baskets { get; }
         [NotMapped]
         public double Price { set; get; }
-
+        [NotMapped]
+        //public List<Tuple<DateTime, double>> PriceHistory;
+        public List<PriceHistory> PriceHistoryList;
         // Price goes from blockchain
     }
 }

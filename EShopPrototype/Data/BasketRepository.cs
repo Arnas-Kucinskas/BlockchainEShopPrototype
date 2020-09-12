@@ -43,5 +43,27 @@ namespace EShopPrototype.Data
 
             return basket;
         }
+
+        public void UpdateQuanityt(Basket basketProduct)
+        {
+            _appDBContext.Update(basketProduct);
+            _appDBContext.SaveChanges();
+        }
+
+        public void DeleteBasketProduct(Basket basketProduct)
+        {
+            if (basketProduct == null)
+            {
+                throw new ArgumentNullException(nameof(basketProduct));
+            }
+            _appDBContext.Remove(basketProduct);
+            _appDBContext.SaveChanges();
+            //Basket basket = _appDBContext.
+        }
+
+        public Basket GetBasketById(int basketId)
+        {
+            return _appDBContext.Baskets.FirstOrDefault(p => p.Id == basketId);
+        }
     }
 }

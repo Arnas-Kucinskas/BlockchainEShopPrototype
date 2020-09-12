@@ -30,6 +30,20 @@ namespace EShopPrototype.Controllers
             var userBasket = await _basketRepository.GetMyBasket(id);
             return Ok(userBasket);
         }
+        /* Make it generic patch request? */
+        [HttpPost("ChangeQuanityt/{id}")]
+        public IActionResult UpdateProductQuantity(int id, [FromBody]int productQuantity)
+        {
+
+            Basket basketProduct = _basketRepository.GetBasketById(id);
+            if (basketProduct == null)
+            {
+                return NotFound();
+            }
+            basketProduct.ProductQuanity = productQuantity;
+            _basketRepository.UpdateQuanityt(basketProduct);
+            return Ok(basketProduct);
+        }
 
         [HttpPost("AddProduct")]
         public IActionResult AddProduct()
@@ -40,20 +54,24 @@ namespace EShopPrototype.Controllers
                 OrderNumer = 132,
                 ProductId = 1,
                 UserId = 1,
-                //User = new User() {   },
-                //Product = new Product() {  },
                 ProductQuanity = 2
             };
             _basketRepository.AddProductToBasket(item);
             return Ok();
         }
 
-        public IActionResult GetBasketById(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProductFromBasket(int id)
         {
-            //Product product = _basketRepository.G(id);
-            //return Ok(product);
-            return null;
+            Basket basketProduct = _basketRepository.GetBasketById(id);
+            if (basketProduct == null)
+            {
+                return NotFound();
+            }
+            _basketRepository.DeleteBasketProduct(basketProduct);
+            return NoContent();
+            //_basketRepository.Get
+            //_basketRepository.
         }
-
     }
 }

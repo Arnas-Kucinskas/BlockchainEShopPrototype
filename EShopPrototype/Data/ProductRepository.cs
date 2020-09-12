@@ -32,10 +32,32 @@ namespace EShopPrototype.Data
             bool successful = await _blockchainRepository.SetProductPrice(product.Id, product.Price);
         }
 
-        public Product GetProductById(int id)
+        public List<Product> GetPaginatedProductsList(int pageNumber, int itemsPerPage)
         {
-            _blockchainRepository.GetProductPriceHistory(id);
-            return _appDBContext.Products.FirstOrDefault(p => p.Id == id);
+            int skipItems = (pageNumber * itemsPerPage) - itemsPerPage;
+            return _appDBContext.Products.Skip(skipItems).Take(itemsPerPage).ToList();
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _appDBContext.Update(product);
+            _appDBContext.SaveChanges();
+        }
+        public void DeleteProduct(Product product)
+        {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+            _appDBContext.Remove(product);
+            _appDBContext.SaveChanges();
+        }
+        public async Task<Product> GetProductById(int id)
+        {
+            Product product = _appDBContext.Products.FirstOrDefault(p => p.Id == id);
+            List<PriceHistory> productPriceHistory = await  _blockchainRepository.GetProductPriceHistory(id);
+            product.PriceHistoryList = productPriceHistory;
+            return product;
         }
 
         
