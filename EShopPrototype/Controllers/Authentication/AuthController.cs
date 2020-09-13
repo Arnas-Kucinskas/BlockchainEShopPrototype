@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EShopPrototype.Data;
 using EShopPrototype.Data.Interfaces;
-using EShopPrototype.Models.Authentication;
+using Shared.Models.Authentication;
 using EShopPrototype.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

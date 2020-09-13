@@ -1,5 +1,5 @@
-﻿using EShopPrototype.Models;
-using EShopPrototype.Models.Authentication;
+﻿using Shared.Models;
+using Shared.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

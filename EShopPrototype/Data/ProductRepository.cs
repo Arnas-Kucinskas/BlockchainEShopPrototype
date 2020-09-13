@@ -1,5 +1,5 @@
 ﻿using EShopPrototype.Data.Interfaces;
-using EShopPrototype.Models;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
