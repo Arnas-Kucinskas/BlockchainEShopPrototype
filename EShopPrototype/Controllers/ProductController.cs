@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EShopPrototype.Data.Interfaces;
-using Shared.Models;
+using SharedItems.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,10 +50,10 @@ namespace EShopPrototype.Controllers
             
         }
 
-        [HttpGet("{pageNumber}/{itemsPerPage}")]
-        public IActionResult GetPaginatedProducts(int pageNumber, int itemsPerPage)
+        [HttpGet("PageNumber/{pageNumber}/ItemsPerPage/{itemsPerPage}")]
+        public async Task<IActionResult> GetPaginatedProducts(int pageNumber, int itemsPerPage)
         {
-            List<Product> productList = _productRepository.GetPaginatedProductsList(pageNumber, itemsPerPage);
+            List<Product> productList = await _productRepository.GetPaginatedProductsList(pageNumber, itemsPerPage);
             return Ok(productList);
 
         }

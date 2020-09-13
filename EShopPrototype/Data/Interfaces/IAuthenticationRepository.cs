@@ -1,4 +1,4 @@
-﻿using Shared.Models.Authentication;
+﻿using SharedItems.Models.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;

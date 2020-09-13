@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Shared.Models;
+using SharedItems.Models;
 using Microsoft.Extensions.Configuration;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;

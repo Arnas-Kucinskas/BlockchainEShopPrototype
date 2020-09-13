@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopPrototype", "EShopPrototype\EShopPrototype.csproj", "{916DFFD1-BA43-4A07-9268-87798895BB38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{DD17F88D-7105-4863-966D-CB7A550B6F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEndBlazor", "FrontEndBlazor\FrontEndBlazor.csproj", "{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEndBlazor", "FrontEndBlazor\FrontEndBlazor.csproj", "{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedItems", "SharedItems\SharedItems.csproj", "{555FF6B2-955E-4EE4-B774-E495EC2F9C70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{916DFFD1-BA43-4A07-9268-87798895BB38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{916DFFD1-BA43-4A07-9268-87798895BB38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{916DFFD1-BA43-4A07-9268-87798895BB38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD17F88D-7105-4863-966D-CB7A550B6F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD17F88D-7105-4863-966D-CB7A550B6F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD17F88D-7105-4863-966D-CB7A550B6F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD17F88D-7105-4863-966D-CB7A550B6F34}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2202FE36-CBE5-46FF-BCAC-D4D34AE6BB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555FF6B2-955E-4EE4-B774-E495EC2F9C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555FF6B2-955E-4EE4-B774-E495EC2F9C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555FF6B2-955E-4EE4-B774-E495EC2F9C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555FF6B2-955E-4EE4-B774-E495EC2F9C70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

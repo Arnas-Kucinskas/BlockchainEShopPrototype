@@ -1,4 +1,4 @@
-﻿using Shared.Models;
+﻿using SharedItems.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace EShopPrototype.Data.Interfaces
         public Task CreateProduct(Product product);
         public Task<Product> GetProductById(int id);
         public void DeleteProduct(Product product);
-        public List<Product> GetPaginatedProductsList(int pageNumber, int itemsPerPage);
+        public Task<List<Product>> GetPaginatedProductsList(int pageNumber, int itemsPerPage);
 
         public void UpdateProduct(Product product);
     }

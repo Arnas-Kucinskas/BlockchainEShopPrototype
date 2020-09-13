@@ -1,5 +1,5 @@
 ﻿using EShopPrototype.Data.Interfaces;
-using Shared.Models;
+using SharedItems.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +32,14 @@ namespace EShopPrototype.Data
             bool successful = await _blockchainRepository.SetProductPrice(product.Id, product.Price);
         }
 
-        public List<Product> GetPaginatedProductsList(int pageNumber, int itemsPerPage)
+        public async Task<List<Product>> GetPaginatedProductsList(int pageNumber, int itemsPerPage)
         {
             int skipItems = (pageNumber * itemsPerPage) - itemsPerPage;
+            List<Product> productList = _appDBContext.Products.Skip(skipItems).Take(itemsPerPage).ToList();
+            foreach (var product in productList)
+            {
+                product.Price = await _blockchainRepository.GetProductPrice(product.Id);
+            }
             return _appDBContext.Products.Skip(skipItems).Take(itemsPerPage).ToList();
         }
 
@@ -57,6 +62,7 @@ namespace EShopPrototype.Data
             Product product = _appDBContext.Products.FirstOrDefault(p => p.Id == id);
             List<PriceHistory> productPriceHistory = await  _blockchainRepository.GetProductPriceHistory(id);
             product.PriceHistoryList = productPriceHistory;
+            product.Price = await _blockchainRepository.GetProductPrice(id);
             return product;
         }
 

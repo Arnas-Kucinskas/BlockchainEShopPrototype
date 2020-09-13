@@ -1,4 +1,4 @@
-﻿using Shared.Models;
+﻿using SharedItems.Models;
 using EShopPrototype.Models.Authentication;
 using System;
 using System.Collections.Generic;

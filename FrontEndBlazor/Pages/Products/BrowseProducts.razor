@@ -1,0 +1,48 @@
+﻿@page "/BrowseProducts";
+@using Services;
+@using SharedItems.Models;
+@inject ProductHttpService productService;
+
+<h3>BrowseProducts</h3>
+@if (productList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prduct ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in productList)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Description</td>
+                    <td>
+                        <a class="nav-link" href="ProductPage/@product.Id">
+                            <span class="oi oi-pencil" aria-hidden="true"></span> Inspect
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
+}
+@code {
+    List<Product> productList;
+    int productsPerPage = 10;
+    int page = 1;
+    protected override async Task OnInitializedAsync()
+    {
+        productList = await productService.GetPaginatedProductsList(page, productsPerPage);
+    }
+}

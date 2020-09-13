@@ -7,3 +7,5 @@ EShopPrototype/obj
 EShopPrototype/appsettings.json
 FrontEndBlazor/bin/
 FrontEndBlazor/obj/
+SharedItems/obj/
+SharedItems/bin/

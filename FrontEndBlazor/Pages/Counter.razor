@@ -1,4 +1,6 @@
 ﻿@page "/counter"
+@using Services;
+@inject ProductHttpService productService;
 
 <h1>Counter</h1>
 
@@ -12,5 +14,6 @@
     private void IncrementCount()
     {
         currentCount++;
+        //productService.GetProductById();
     }
 }

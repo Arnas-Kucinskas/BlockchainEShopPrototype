@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using EShopPrototype.Data.Interfaces;
-using Shared.Models.Authentication;
+using SharedItems.Models.Authentication;
 
 namespace EShopPrototype.Services
 {

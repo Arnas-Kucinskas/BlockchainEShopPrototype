@@ -1,5 +1,5 @@
-﻿using Shared.Models;
-using Shared.Models.Authentication;
+﻿using SharedItems.Models;
+using SharedItems.Models.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
