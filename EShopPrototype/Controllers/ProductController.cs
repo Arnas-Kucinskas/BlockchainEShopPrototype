@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using EShopPrototype.Data.Interfaces;
 using EShopPrototype.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EShopPrototype.Controllers
 {
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

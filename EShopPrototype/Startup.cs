@@ -23,6 +23,7 @@ namespace EShopPrototype
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,6 +36,18 @@ namespace EShopPrototype
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      /*builder.WithOrigins("https://localhost",
+                                                          "http://localhost");*/
+                                      builder.AllowAnyOrigin();
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyMethod();
+                                  });
+            });
             string key = Configuration.GetSection("Config:Key").Value;
             services.AddAuthentication(x =>
             {
@@ -52,10 +65,7 @@ namespace EShopPrototype
                     ValidateAudience = false
                 };
             });
-            //services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
-            //services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager());
             services.AddScoped<IJwtAuthenticationManager, JwtAuthenticationManager>();
-            // services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
             services.AddDbContext<AppDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -79,6 +89,8 @@ namespace EShopPrototype
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
 
