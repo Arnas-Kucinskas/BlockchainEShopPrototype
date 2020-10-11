@@ -1,15 +1,42 @@
 ﻿@inherits LayoutComponentBase
-
+@using Services;
+@inject AuthenticationHttpService authenticationService;
 <div class="sidebar">
     <NavMenu />
 </div>
 
 <div class="main">
     <div class="top-row px-4">
+        <AuthorizeView>
+            <Authorized>
+                <a class="nav-link" href="Profile">
+                    <span class="oi oi-pencil" aria-hidden="true"></span> Profile
+                </a>
+                <input type="button" class="btn btn-primary" @onclick="@Logout" value="Logout" />
+            </Authorized>
+            <NotAuthorized>
+                <a class="nav-link" href="Login">
+                    <span class="oi oi-pencil" aria-hidden="true"></span> Login
+                </a>
+                <a class="nav-link" href="Register">
+                    <span class="oi oi-pencil" aria-hidden="true"></span> Register
+                </a>
+            </NotAuthorized>
+        </AuthorizeView>
+
         <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+
     </div>
 
     <div class="content px-4">
         @Body
     </div>
 </div>
+
+@code {
+    protected void Logout()
+    {
+        authenticationService.LogoutUser();
+
+    }
+}

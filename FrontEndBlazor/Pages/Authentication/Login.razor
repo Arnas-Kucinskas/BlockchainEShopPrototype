@@ -1,0 +1,51 @@
+﻿@page "/Login";
+@using SharedItems.Models.Authentication;
+@using Services;
+@inject AuthenticationHttpService authenticationService;
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Login</h3>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Name" class="custom-control-label"></label>
+                <input for="Name" class="form-control" @bind="@user.Username" />
+            </div>
+
+            <div class="form-group">
+                <label for="Password" class="custom-control-label"></label>
+                <input form="Password" class="form-control" @bind="@user.Password" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@TryLogin" value="Update" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+    User user = new User();
+
+    protected async void TryLogin()
+    {
+        string a = "";
+        authenticationService.Login(user);
+        
+    }
+
+    protected void Cancel()
+    {
+
+    }
+
+}

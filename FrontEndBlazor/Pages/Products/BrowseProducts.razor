@@ -22,17 +22,22 @@ else
         <tbody>
             @foreach (var product in productList)
             {
-                <tr>
-                    <td>@product.Id</td>
-                    <td>@product.Name</td>
-                    <td>@product.Price</td>
-                    <td>@product.Description</td>
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Description</td>
+                <td>
+                    <a class="nav-link" href="ProductPage/@product.Id">
+                        <span class="oi oi-pencil" aria-hidden="true"></span> Inspect
+                    </a>
+                </td>
+                <AuthorizeView>
                     <td>
-                        <a class="nav-link" href="ProductPage/@product.Id">
-                            <span class="oi oi-pencil" aria-hidden="true"></span> Inspect
-                        </a>
+                        <input type="button" class="btn btn-primary" @onclick="@AddToBasket" value="Add to basket" />
                     </td>
-                </tr>
+                </AuthorizeView>
+            </tr>
             }
             </tbody>
     </table>
@@ -44,5 +49,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         productList = await productService.GetPaginatedProductsList(page, productsPerPage);
+    }
+
+    protected  void AddToBasket()
+    {
+
     }
 }

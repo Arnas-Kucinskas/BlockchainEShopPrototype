@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FrontEndBlazor.Services;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace FrontEndBlazor
 {
@@ -20,6 +22,14 @@ namespace FrontEndBlazor
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001/api/") });
             builder.Services.AddScoped<ProductHttpService>();
+            builder.Services.AddScoped<AuthenticationHttpService>();
+            builder.Services.AddBlazoredLocalStorage();
+            //builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore(options => { });
+            
+            //builder.Services.AddScoped<AuthenticationStateProvider>( p => p.GetService<CustomAuthStateProvider>());
             await builder.Build().RunAsync();
         }
     }
