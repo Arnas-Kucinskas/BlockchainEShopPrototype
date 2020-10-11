@@ -3,6 +3,7 @@ using EShopPrototype.Data.Interfaces;
 using EShopPrototype.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SharedItems.Models.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,10 +33,12 @@ namespace EShopPrototype
             _passwordManager = passwordManager;
             //_authenticationRepository = authenticationRepository;
         }
+
+
         public string Authenticate(string username, string password)
         {
-            bool passwordValid = _passwordManager.ValidateHashedPassword( username,  password);
-            if (!passwordValid)
+            User validUser = _passwordManager.ValidateHashedPassword( username,  password);
+            if (validUser == null)
             {
                 return null;
             }
@@ -46,7 +49,9 @@ namespace EShopPrototype
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, validUser.Username),
+                    new Claim(ClaimTypes.Email, validUser.Email),
+                    new Claim(ClaimTypes.NameIdentifier, validUser.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
@@ -55,5 +60,20 @@ namespace EShopPrototype
             return tokenHandler.WriteToken(token);
 
         }
+
+        public int GetClaim(string token)
+        {
+            if (token.Contains("Bearer"))
+            {
+                token = token.Substring(7);
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+            
+            var stringClaimValue = securityToken.Claims.FirstOrDefault(claim => claim.Type == "nameid").Value;
+            return Convert.ToInt32(stringClaimValue);
+        }
+
+
     }
 }

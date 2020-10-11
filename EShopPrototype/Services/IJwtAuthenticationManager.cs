@@ -9,5 +9,6 @@ namespace EShopPrototype
     public interface IJwtAuthenticationManager
     {
         public string Authenticate(string username, string password);
+        public int GetClaim(string token);
     }
 }

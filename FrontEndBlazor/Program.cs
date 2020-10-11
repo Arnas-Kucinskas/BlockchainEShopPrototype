@@ -22,6 +22,7 @@ namespace FrontEndBlazor
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001/api/") });
             builder.Services.AddScoped<ProductHttpService>();
+            builder.Services.AddScoped<BasketHttpService>();
             builder.Services.AddScoped<AuthenticationHttpService>();
             builder.Services.AddBlazoredLocalStorage();
             //builder.Services.AddAuthorizationCore();

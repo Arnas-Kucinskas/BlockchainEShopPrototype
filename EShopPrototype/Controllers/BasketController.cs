@@ -7,6 +7,8 @@ using SharedItems.Models;
 using EShopPrototype.Models.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Primitives;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,11 +20,12 @@ namespace EShopPrototype.Controllers
     public class BasketController : ControllerBase
     {
         private readonly BasketRepository _basketRepository;
-
-        public BasketController(BasketRepository basketRepository)
+        private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
+        public BasketController(BasketRepository basketRepository, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _basketRepository = basketRepository;
-        }
+            _jwtAuthenticationManager = jwtAuthenticationManager;
+    }
 
         [HttpGet("GetUserBasket/{id}", Name = "GetUserBasket")]
         public async Task<IActionResult> GetUserBasket(int id)
@@ -44,19 +47,29 @@ namespace EShopPrototype.Controllers
             _basketRepository.UpdateQuanityt(basketProduct);
             return Ok(basketProduct);
         }
-
+        [Authorize]
         [HttpPost("AddProduct")]
-        public IActionResult AddProduct()
+        public IActionResult AddProduct([FromHeader] string Authorization, [FromBody] Basket product)
         {//Basket item
             //GetUserBasket()
-            Basket item = new Basket()
+            //Basket product = new Basket
+            /*Basket product = new Basket()
+            {
+                ProductId = 1,
+                ProductQuanity = 2
+            };*/
+            int userId = _jwtAuthenticationManager.GetClaim(Authorization);
+            product.UserId = userId;
+
+            
+            /*Basket item = new Basket()
             {
                 OrderNumer = 132,
                 ProductId = 1,
                 UserId = 1,
                 ProductQuanity = 2
-            };
-            _basketRepository.AddProductToBasket(item);
+            };*/
+            _basketRepository.AddorUpdateProductInBasket(product);
             return Ok();
         }
 

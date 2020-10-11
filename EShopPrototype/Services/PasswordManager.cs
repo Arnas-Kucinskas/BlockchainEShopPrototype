@@ -29,16 +29,16 @@ namespace EShopPrototype.Services
 
         }
 
-        public bool ValidateHashedPassword(string username, string password)
+        public User ValidateHashedPassword(string username, string password)
         {
             User user = _authenticationRepository.GetUserByName(username);
 
             string hashedPassword = ComputePassword(password, salt);
             if (hashedPassword == user.Password)
             {
-                return true;
+                return user;
             }
-            return false;
+            return null;
         }
 
         private static String ComputePassword(string password, string salt)

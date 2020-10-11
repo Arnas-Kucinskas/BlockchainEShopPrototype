@@ -2,6 +2,8 @@
 @using Services;
 @using SharedItems.Models;
 @inject ProductHttpService productService;
+@inject BasketHttpService basketService;
+
 
 <h3>BrowseProducts</h3>
 @if (productList == null)
@@ -34,8 +36,9 @@ else
                 </td>
                 <AuthorizeView>
                     <td>
-                        <input type="button" class="btn btn-primary" @onclick="@AddToBasket" value="Add to basket" />
+                        <input type="button" class="btn btn-primary" @onclick="@(f => AddToBasket(product))" value="Add to basket" />
                     </td>
+
                 </AuthorizeView>
             </tr>
             }
@@ -51,8 +54,8 @@ else
         productList = await productService.GetPaginatedProductsList(page, productsPerPage);
     }
 
-    protected  void AddToBasket()
+    protected  void AddToBasket(Product product)
     {
-
+        basketService.AddProductToBasket(product);
     }
 }

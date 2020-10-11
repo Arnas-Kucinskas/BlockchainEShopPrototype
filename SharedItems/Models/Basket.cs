@@ -11,12 +11,12 @@ namespace SharedItems.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        //[Required]
         public int OrderNumer { get; set; }
-        [Required]
+        //[Required]
         public User User { get; set; }
         public virtual int UserId { get; set; }
-        [Required]
+        //[Required]
         public Product Product { get; set; }
         public virtual int ProductId { get; set; }
         [Required]

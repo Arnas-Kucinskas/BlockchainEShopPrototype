@@ -18,14 +18,28 @@ namespace EShopPrototype.Data
             _blockchainRepository = blockchainRepository;
         }
 
-        public  void AddProductToBasket(Basket basket)
+        public  void AddorUpdateProductInBasket(Basket basket)
         {
-
             if (basket == null)
             {
                 throw new ArgumentNullException(nameof(basket));
             }
-            _appDBContext.Baskets.Add(basket);
+
+            Basket product = _appDBContext.Baskets
+                .Where(x => x.UserId == basket.UserId)
+                .Where(x => x.ProductId == basket.ProductId)
+                .FirstOrDefault();
+
+            if (product == null)
+            {
+                _appDBContext.Baskets.Add(basket);
+            }
+            else
+            {
+                product.ProductQuanity += basket.ProductQuanity;
+                _appDBContext.Update(product);
+
+            }
             _appDBContext.SaveChanges();
         }
 
