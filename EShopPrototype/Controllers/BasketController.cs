@@ -26,15 +26,16 @@ namespace EShopPrototype.Controllers
             _basketRepository = basketRepository;
             _jwtAuthenticationManager = jwtAuthenticationManager;
     }
-
-        [HttpGet("GetUserBasket/{id}", Name = "GetUserBasket")]
-        public async Task<IActionResult> GetUserBasket(int id)
+        [Authorize]
+        [HttpGet("GetUserBasket", Name = "GetUserBasket")]
+        public async Task<IActionResult> GetUserBasket([FromHeader] string Authorization)
         {
-            var userBasket = await _basketRepository.GetMyBasket(id);
+            int userId = _jwtAuthenticationManager.GetClaim(Authorization);
+            var userBasket = await _basketRepository.GetMyBasket(userId);
             return Ok(userBasket);
         }
         /* Make it generic patch request? */
-        [HttpPost("ChangeQuanityt/{id}")]
+        /*[HttpPost("ChangeQuanityt/{id}")]
         public IActionResult UpdateProductQuantity(int id, [FromBody]int productQuantity)
         {
 
@@ -46,29 +47,13 @@ namespace EShopPrototype.Controllers
             basketProduct.ProductQuanity = productQuantity;
             _basketRepository.UpdateQuanityt(basketProduct);
             return Ok(basketProduct);
-        }
+        }*/
         [Authorize]
         [HttpPost("AddProduct")]
         public IActionResult AddProduct([FromHeader] string Authorization, [FromBody] Basket product)
-        {//Basket item
-            //GetUserBasket()
-            //Basket product = new Basket
-            /*Basket product = new Basket()
-            {
-                ProductId = 1,
-                ProductQuanity = 2
-            };*/
+        {
             int userId = _jwtAuthenticationManager.GetClaim(Authorization);
             product.UserId = userId;
-
-            
-            /*Basket item = new Basket()
-            {
-                OrderNumer = 132,
-                ProductId = 1,
-                UserId = 1,
-                ProductQuanity = 2
-            };*/
             _basketRepository.AddorUpdateProductInBasket(product);
             return Ok();
         }

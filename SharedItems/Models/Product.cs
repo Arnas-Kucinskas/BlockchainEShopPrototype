@@ -19,7 +19,7 @@ namespace SharedItems.Models
         public double Price { set; get; }
         [NotMapped]
         //public List<Tuple<DateTime, double>> PriceHistory;
-        public List<PriceHistory> PriceHistoryList;
+        public List<PriceHistory> PriceHistoryList { get; set; }
         // Price goes from blockchain
     }
 }

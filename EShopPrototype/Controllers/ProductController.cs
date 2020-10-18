@@ -6,6 +6,7 @@ using EShopPrototype.Data.Interfaces;
 using SharedItems.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +23,7 @@ namespace EShopPrototype.Controllers
             _productRepository = productRepository;
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
